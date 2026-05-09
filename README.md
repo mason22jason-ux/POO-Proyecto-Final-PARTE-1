@@ -1,137 +1,105 @@
-# Proyecto Final PARTE 1 POO - Mediateca
+# Proyecto Final PARTE 1 POO - Sistema de Mediateca
 
 ## Descripción
 
-Aplicación de escritorio desarrollada en Java para la gestión de una mediateca.  
-Permite trabajar con materiales como libros, revistas, CDs de audio y DVDs.
+Aplicación de escritorio desarrollada en Java para la gestión de una mediateca o biblioteca institucional.
+
+El sistema permitirá registrar usuarios, documentos de información, ejemplares, préstamos, devoluciones, consultas de disponibilidad y cálculo de mora.
+
+El proyecto corresponde a la Fase I del Proyecto Final de Programación Orientada a Objetos.
+
+---
+
+## Software utilizado
 
 El proyecto utiliza:
 
 - Apache NetBeans
 - Java
-- MySQL Workbench
-- MySQL Server
-- MySQL Connector/J
+- SQL Server
+- SQL Server Management Studio
 - JDBC
+- Microsoft JDBC Driver for SQL Server
 
 ---
 
-## Distribución de tareas
+## Objetivo general
 
-| Integrante | Responsabilidad |
-|---|---|
-| Integrante 1 | Crear la base de datos, tablas principales, proyecto base en NetBeans, conexión con MySQL y pruebas iniciales. |
-| Integrante 2 | Desarrollar el módulo de Libros. |
-| Integrante 3 | Desarrollar el módulo de Revistas. |
-| Integrante 4 | Desarrollar el módulo de CDs de audio. |
-| Integrante 5 | Desarrollar el módulo de DVDs y listado general de materiales. |
+Crear una aplicación de escritorio que permita administrar los materiales de una mediateca, controlar usuarios con diferentes privilegios y gestionar préstamos, devoluciones y mora.
+
+---
+
+## Tipos de usuarios del sistema
+
+El sistema manejará 3 tipos de usuarios principales:
+
+- Administrador
+- Profesor
+- Alumno
+
+Cada tipo de usuario tendrá diferentes privilegios dentro del sistema.
+
+---
+
+## Distribución de tareas del equipo
+
+| Integrante | Parte asignada | Responsabilidades principales | Entregables |
+|---|---|---|---|
+| Integrante 1 | Gestión de usuarios y privilegios | Crear los 3 tipos de usuario: Administrador, Profesor y Alumno. Definir qué puede hacer cada uno dentro del sistema. Diseñar el acceso/login y la asignación de privilegios. | Tabla de usuarios, roles, permisos, pantalla de login y CRUD básico de usuarios. |
+| Integrante 2 | Registro de documentos y ejemplares | Investigar los campos necesarios para cada tipo de documento: libros, obras, revistas, CD, tesis u otros. Crear el módulo para ingresar nuevos ejemplares al sistema. | Formulario de registro, estructura de datos de documentos y validaciones básicas. |
+| Integrante 3 | Consulta y búsqueda de ejemplares | Crear la parte del sistema que permita buscar documentos por ubicación, cantidad de ejemplares, disponibles, prestados, tipo de documento, título, autor, etc. | Pantalla de búsqueda, filtros, listado de resultados y consulta de ejemplares. |
+| Integrante 4 | Préstamos, devoluciones y control de disponibilidad | Desarrollar el módulo para prestar documentos únicamente a usuarios registrados y sin mora. Registrar préstamos, devoluciones y actualizar disponibilidad de ejemplares. | Módulo de préstamos, módulo de devoluciones, validación de disponibilidad y mora. |
+| Integrante 5 | Configuración de préstamos, mora y documentación general | Configurar cuántos ejemplares se pueden prestar, definir la mora diaria por año, apoyar con el cálculo de mora, documentación final, pruebas generales y presentación. | Módulo de configuración, cálculo de mora, pruebas del sistema, manual o presentación. |
 
 ---
 
 ## Base de datos
 
-La base de datos se llama:
+La base de datos se trabajará en SQL Server.
 
-mediateca
+Nombre recomendado de la base de datos:
 
-Tablas principales:
+MediatecaDB
 
-- material
-- libro
-- revista
-- cd_audio
-- dvd
+Tablas principales sugeridas:
+
+- Usuarios
+- Roles
+- Permisos
+- RolPermiso
+- Documentos
+- TiposDocumento
+- Ejemplares
+- Prestamos
+- DetallePrestamo
+- Devoluciones
+- ConfiguracionPrestamos
+- Moras
 
 ---
 
 ## Indicaciones para ejecutar el proyecto
 
-1. Abrir MySQL Workbench.
-2. Ejecutar el archivo `script_base_datos.sql`.
-3. Verificar que se haya creado la base de datos `mediateca`.
-4. Abrir el proyecto `MediatecaApp` en Apache NetBeans.
-5. Agregar MySQL Connector/J si NetBeans no lo reconoce.
-6. Abrir la clase `dao.Conexion.java`.
-7. Cambiar la contraseña de MySQL en esta línea:
-
-private static final String PASSWORD = "TU_CONTRASEÑA_MYSQL";
-
-8. Ejecutar la clase `PruebaConexion.java`.
-9. Si aparece el mensaje “Conexión exitosa a MySQL”, el proyecto está listo para continuar.
+1. Abrir SQL Server Management Studio.
+2. Ejecutar el script principal de creación de la base de datos.
+3. Verificar que se haya creado la base de datos `MediatecaDB`.
+4. Verificar que las tablas principales se hayan creado correctamente.
+5. Abrir el proyecto en Apache NetBeans.
+6. Agregar el Microsoft JDBC Driver for SQL Server si NetBeans no lo reconoce.
+7. Abrir la clase de conexión del proyecto.
+8. Verificar el nombre del servidor, usuario y contraseña de SQL Server.
+9. Ejecutar la clase de prueba de conexión.
+10. Si aparece el mensaje de conexión exitosa, el proyecto está listo para continuar.
 
 ---
 
-## Importante
+## Conexión a SQL Server
 
-Cada integrante debe colocar su propia contraseña de MySQL en `Conexion.java`.
+La conexión desde Java debe usar JDBC.
 
-No subir contraseñas reales al repositorio.
+Ejemplo de conexión:
 
-No cambiar el nombre de la base de datos. Debe llamarse:
-
-mediateca
-
-El usuario recomendado es:
-
-root
-
-El puerto usado es:
-
-3306
-
----
-
-## Pruebas realizadas
-
-Se realizaron las siguientes pruebas iniciales:
-
-- Creación de la base de datos en MySQL.
-- Creación de las tablas principales.
-- Conexión exitosa desde NetBeans hacia MySQL.
-- Inserción de prueba desde Java.
-- Verificación de datos en MySQL Workbench.
-
----
-
-## Limpieza de datos de prueba
-
-Después de hacer pruebas, se pueden borrar los datos de ejemplo con:
-
-DELETE FROM material WHERE codigo = 'LIB001';
-
----
-
-## Errores comunes
-
-### Access denied for user 'root'@'localhost'
-
-La contraseña de MySQL es incorrecta.  
-Cada integrante debe revisar y colocar su propia contraseña en `Conexion.java`.
-
-### Unknown database 'mediateca'
-
-La base de datos no existe.  
-Se debe ejecutar primero el archivo `script_base_datos.sql`.
-
-### No suitable driver found
-
-Falta agregar MySQL Connector/J al proyecto.  
-Agregar el archivo `.jar` desde:
-
-Project Properties > Libraries > Add JAR/Folder
-
----
-
-## Estado actual
-
-La base inicial del proyecto está lista.
-
-Ya se cuenta con:
-
-- Base de datos creada.
-- Tablas principales creadas.
-- Proyecto base en NetBeans.
-- Conexión Java con MySQL funcionando.
-- Pruebas iniciales realizadas correctamente.
-
-Los demás integrantes pueden continuar con sus módulos asignados.
+```java
+private static final String URL = "jdbc:sqlserver://localhost:1433;databaseName=MediatecaDB;encrypt=true;trustServerCertificate=true";
+private static final String USER = "sa";
+private static final String PASSWORD = "TU_CONTRASEÑA";
